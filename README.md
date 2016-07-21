@@ -18,3 +18,6 @@
 
 ## logging out error
 - 400 Bad Request upon logging out, maybe its another typo. It navigates me to the login page, which is good, so it does not **appear** to have broken things.
+
+## finally fixed errors
+- I finally fixed the 401 errors I was seeing. After some online searching, I found that my error may have been not using "new" when creating a view for the feed page. Logging out works fine as well. Also added delete functionality. The X to delete only shows up for the user that posted the tweet

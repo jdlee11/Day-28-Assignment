@@ -1,5 +1,6 @@
 import $ from "jquery";
 import Backbone from "backbone";
+import _ from "underscore";
 import session from "../models/username";
 import tweetCollection from "../collections/tweets";
 import router from "../router";
@@ -19,28 +20,28 @@ const FeedView = Backbone.View.extend({
         body: $("textarea").val()
     }, {
         success: function(response){
+            router.navigate("", {trigger: false});
             router.navigate("feed", {trigger: true});
-            console.log("created tweet");
         }, error: function(response){
           console.log(response);
         }
     });
   },
   template: function(){
-    let toReturn = `
+    return `
     <div class="new-tweet">
       <textarea placeholder="Tweet something"></textarea>
       <button class="addTweet">Post</button>
     </div>
-    <div class="feed">`;
-    tweetCollection.forEach(function(tweet){
-      toReturn += TweetView(tweet).el;
-    });
-    toReturn += `</div>`;
-    return toReturn;
+    <div class="feed"></div>`;
   },
   render: function() {
     this.$el.html(this.template());
+    tweetCollection.each((tweet) => {
+      var tweetDiv = new TweetView({model: tweet});
+      tweetDiv.render();
+      this.$el.find(".feed").prepend(tweetDiv.$el);
+    });
     return this;
   }
 });

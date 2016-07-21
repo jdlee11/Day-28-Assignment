@@ -39,13 +39,17 @@ const Router = Backbone.Router.extend({
     this.navigate('login', {trigger: true});
   },
   feedFunction: function(){
-    // tweetCollection.fetch();
-
-    let feed = new FeedView();
-    feed.render();
-    $(".container").empty().append(feed.$el);
-    $("header h2").text(`Welcome, ${session.get("username")}`);
-    $(".logoutLink").removeClass("hidden");
+    tweetCollection.fetch({
+      header: {
+        Authorization: `Basic ${settings.basicAuth}`
+      }, success: function(){
+        let feed = new FeedView();
+        feed.render();
+        $(".container").empty().append(feed.$el);
+        $("header h2").text(`Welcome, ${session.get("username")}`);
+        $(".logoutLink").removeClass("hidden");
+      }
+    });
   }
 });
 

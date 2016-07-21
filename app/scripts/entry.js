@@ -5,7 +5,7 @@ import settings from "./settings";
 import session from "./models/username";
 
 $(document).ajaxSend(function(evt, xhrAjax, jqueryAjax) {
-  if (localStorage.getItem('authtoken')) {
+  if (session.get('authtoken')) {
     xhrAjax.setRequestHeader('Authorization', 'Kinvey ' + session.get("authtoken"));
   } else {
     xhrAjax.setRequestHeader('Authorization', 'Basic ' + settings.basicAuth);
